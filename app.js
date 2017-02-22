@@ -1,5 +1,5 @@
 var app           = require('express')();
-var express       = require('express')
+var express       = require('express');
 var http          = require('http').Server(app);
 var bodyParser    = require('body-parser');
 var mongoose      = require('mongoose');
@@ -31,7 +31,11 @@ passport.use(new localStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-
+// current user declare here 
+app.use(function(req, res, next){
+  res.locals.currentUser = req.user;
+  next();
+})
 
 
 app.get('/', function(req, res){
@@ -44,7 +48,7 @@ app.get('/lapakmac', function(req, res) {
     if(err) {
       console.log(err);
     } else {
-      res.render("lapakmac/index", {lapakmac:allLapakMac});
+      res.render("lapakmac/index", {lapakmac:allLapakMac, currentUser: req.user});
     }
   })
 
@@ -89,7 +93,7 @@ app.get('/lapakmac/:id', function(req, res){
 // ====================
 // COMMENTS ROUTES
 // ====================
-app.get('/lapakmac/:id/comments/new', function(req, res){
+app.get('/lapakmac/:id/comments/new',isLoggedIn, function(req, res){
   // find campground by id
   lapakmacs.findById(req.params.id, function(err, lapakmac){
       if(err){
@@ -100,7 +104,7 @@ app.get('/lapakmac/:id/comments/new', function(req, res){
   })
 });
 
-app.post('/lapakmac/:id/comments', function(req, res){
+app.post('/lapakmac/:id/comments',isLoggedIn, function(req, res){
   // melihat laoakmac by id
   lapakmacs.findById(req.params.id, function(err, lapakmac){
     if(err){
@@ -144,6 +148,34 @@ app.post('/register', function(req, res){
   })
 })
 
+// show login form
+app.get('/login', function(req, res){
+  res.render('login');
+});
+
+//handling logic post
+app.post('/login', passport.authenticate('local',
+    {
+      successRedirect : '/lapakmac',
+      failureRedirect : '/login'
+    }), function(req, res){
+  res.render()
+})
+
+
+// log out route
+app.get('/logout', function(req, res){
+  req.logout();
+  res.redirect('/lapakmac');
+});
+
+// fungsi authenticate comment login
+function isLoggedIn(req, res, next){
+  if(req.isAuthenticated()){
+    return next();
+  }
+  res.redirect('/login');
+};
 
 http.listen(3000, function(){
   console.log("Iklan Mac Server Has Started!!");
