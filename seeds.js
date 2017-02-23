@@ -23,56 +23,33 @@ var data = [
 function seedDB(){
   // hapus semua lapak
   lapakmacs.remove({}, function(err){
-    if(err){
-      console.log(err);
-    }
-      console.log("remove lapak!");
-      data.forEach(function(seed){
-        lapakmacs.create(seed, function(err, lapakmac){
-          if(err){
-            console.log(err);
-          } else {
-            console.log("Added a new lapak!");
-            Comment.create(
-              {
-                text: "sundul gan!",
-                author: "kumar"
-              }, function(err, comment){
-                if(err){
-                  console.log(err);
-                } else {
-                  lapakmac.comments.push(comment);
-                  lapakmac.save();
-                  console.log("Created new comment");
-                }
-              });
-          }
-      });
-    });
-  });
-    // data.forEach(function(seed){
-    //   lapakmacs.create(seed, function(err, Lapakmacs){
-    //     if(err){
-    //       console.log(err);
-    //     } else {
-    //       console.log("added a new lapak");
-    //       // untuk komentar
-    //       Comment.create(
-    //         {
-    //           text: "harganya kurangin dikit gan",
-    //         author: "kumar"
-    //         }, function (err, comment){
-    //           if(err){
-    //           console.log(err);
-    //         } else {
-    //           Lapakmacs.Comment.push(comment);
-    //           Lapakmacs.save();
-    //           console.log("Created new comment");
-    //         }
-    //       });
-    //     }
+    // if(err){
+    //   console.log(err);
+    // }
+    //   console.log("remove lapak!");
+    //   data.forEach(function(seed){
+    //     lapakmacs.create(seed, function(err, lapakmac){
+    //       if(err){
+    //         console.log(err);
+    //       } else {
+    //         console.log("Added a new lapak!");
+    //         Comment.create(
+    //           {
+    //             text: "sundul gan!",
+    //             author: "kumar"
+    //           }, function(err, comment){
+    //             if(err){
+    //               console.log(err);
+    //             } else {
+    //               lapakmac.comments.push(comment);
+    //               lapakmac.save();
+    //               console.log("Created new comment");
+    //             }
+    //           });
+    //       }
     //   });
     // });
+  });
 };
 
 module.exports = seedDB;

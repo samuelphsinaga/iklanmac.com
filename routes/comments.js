@@ -32,6 +32,11 @@ router.post('/',isLoggedIn, function(req, res){
           if(err){
             console.log(err);
           } else {
+            // menambah username dan id ke comment
+            comment.author.id = req.user._id;
+            comment.author.username = req.user.username;
+            // simpan comment
+            comment.save();
             lapakmac.comments.push(comment);
             lapakmac.save();
             res.redirect('/lapakmac/' + lapakmac._id)

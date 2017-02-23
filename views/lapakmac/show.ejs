@@ -16,6 +16,7 @@
           <h4 class="pull-right">IDR.14.000.000,-</h4>
           <h4><a><%= lapakmacs.name %></a></h4>
           <p><p><%=lapakmacs.description %></p></p>
+          <p><em>Lapak By <%= lapakmacs.author.username%></em></p>
         </div>
       </div>
       <div class="well">
@@ -26,7 +27,7 @@
         <% lapakmacs.comments.forEach(function(comment){%>
           <div class="row">
             <div class="col-md-12">
-              <strong><%= comment.author %></strong>
+              <strong><%= comment.author.username %></strong>
               <span class="pull-right">3 days ago</span>
               <p><%= comment.text%></p>
             </div>

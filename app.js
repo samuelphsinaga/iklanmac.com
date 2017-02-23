@@ -15,12 +15,12 @@ var commentRoutes = require('./routes/comments');
 var lapakmacRoutes = require('./routes/lapakmac');
 var indexRoutes   = require('./routes/index');
 
-mongoose.connect('mongodb://localhost/iklanmac7');
+mongoose.connect('mongodb://localhost/iklanmac8');
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + '/public'));
 console.log(__dirname);
-seedDB();
+// seedDB(); // seed database
 
 // PASPORT CONFIGURATION
 app.use(require('express-session')({

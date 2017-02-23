@@ -16,13 +16,17 @@ router.get('/', function(req, res) {
 });
 
 // create lapak
-router.post('/', function(req, res){
+router.post('/', isLoggedIn, function(req, res){
   // res.send("your hit the post route!");
   // ambil data dari form dan coba masukkan ke db
   var name = req.body.name;
   var image = req.body.image;
   var desc = req.body.description;
-  var newLapakMac = {name: name, image: image, description: desc };
+  var author = {
+    id: req.user._id,
+    username: req.user.username
+  }
+  var newLapakMac = {name: name, image: image, description: desc, author: author};
   // buat inputan user jual Mac
   lapakmacs.create(newLapakMac, function(err, newlyCreated){
     if(err) {
@@ -36,7 +40,7 @@ router.post('/', function(req, res){
 });
 
 // halaman untuk buat lapak baru
-router.get('/new', function(req, res){
+router.get('/new', isLoggedIn, function(req, res){
   res.render("lapakmac/new");
 });
 
@@ -51,6 +55,15 @@ router.get('/:id', function(req, res){
     }
   });
 });
+
+
+// fungsi authenticate comment login atau middleware
+function isLoggedIn(req, res, next){
+  if(req.isAuthenticated()){
+    return next();
+  }
+  res.redirect('/login');
+};
 
 
 module.exports = router;
