@@ -5,6 +5,7 @@ var bodyParser    = require('body-parser');
 var mongoose      = require('mongoose');
 var passport      = require('passport');
 var localStrategy = require('passport-local');
+var methodOverride = require('method-override')
 var lapakmacs     = require('./models/lapakmacs');
 var Comment       = require('./models/comment');
 var User          = require('./models/user');
@@ -15,11 +16,11 @@ var commentRoutes = require('./routes/comments');
 var lapakmacRoutes = require('./routes/lapakmac');
 var indexRoutes   = require('./routes/index');
 
-mongoose.connect('mongodb://localhost/iklanmac8');
+mongoose.connect('mongodb://localhost/iklanmac9');
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + '/public'));
-console.log(__dirname);
+app.use(methodOverride("_method"));
 // seedDB(); // seed database
 
 // PASPORT CONFIGURATION

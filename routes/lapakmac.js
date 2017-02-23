@@ -1,6 +1,7 @@
 var express       = require('express');
 var router        = express.Router();
 var lapakmacs     = require('../models/lapakmacs');
+var middleware    = require('../middleware');
 
 //index - show all lapak
 router.get('/', function(req, res) {
@@ -16,7 +17,7 @@ router.get('/', function(req, res) {
 });
 
 // create lapak
-router.post('/', isLoggedIn, function(req, res){
+router.post('/', middleware.isLoggedIn, function(req, res){
   // res.send("your hit the post route!");
   // ambil data dari form dan coba masukkan ke db
   var name = req.body.name;
@@ -40,7 +41,7 @@ router.post('/', isLoggedIn, function(req, res){
 });
 
 // halaman untuk buat lapak baru
-router.get('/new', isLoggedIn, function(req, res){
+router.get('/new', middleware.isLoggedIn, function(req, res){
   res.render("lapakmac/new");
 });
 
@@ -56,14 +57,36 @@ router.get('/:id', function(req, res){
   });
 });
 
+//edit lapakmac
+router.get('/:id/edit', middleware.checkLapakOwnership, function(req, res){
+  // cek apakah user sudah log in?
+  lapakmacs.findById(req.params.id, function(err, foundMac){
+    res.render("lapakmac/edit", {lapakmacs: foundMac});
+  });
+});
 
-// fungsi authenticate comment login atau middleware
-function isLoggedIn(req, res, next){
-  if(req.isAuthenticated()){
-    return next();
-  }
-  res.redirect('/login');
-};
+//update lapakmac
+router.put('/:id', middleware.checkLapakOwnership, function(req, res){
+  // mencari dan update lapak yg sesuai
+  lapakmacs.findByIdAndUpdate(req.params.id, req.body.lapakmacs, function(err, updatedLapakmacs){
+    if(err){
+      res.redirect('/lapakmac');
+    } else {
+      res.redirect('/lapakmac/' + req.params.id);
+    }
+  });
+});
+
+// destroy lapakmac
+router.delete('/:id', middleware.checkLapakOwnership, function(req, res){
+  lapakmacs.findByIdAndRemove(req.params.id, function(err){
+    if(err){
+      res.redirect('/lapakmac');
+    } else {
+      res.redirect('/lapakmac');
+    }
+  });
+});
 
 
 module.exports = router;
