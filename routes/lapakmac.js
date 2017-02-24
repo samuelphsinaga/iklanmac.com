@@ -21,13 +21,14 @@ router.post('/', middleware.isLoggedIn, function(req, res){
   // res.send("your hit the post route!");
   // ambil data dari form dan coba masukkan ke db
   var name = req.body.name;
+  var price = req.body.price;
   var image = req.body.image;
   var desc = req.body.description;
   var author = {
     id: req.user._id,
     username: req.user.username
   }
-  var newLapakMac = {name: name, image: image, description: desc, author: author};
+  var newLapakMac = {name: name, price: price, image: image, description: desc, author: author};
   // buat inputan user jual Mac
   lapakmacs.create(newLapakMac, function(err, newlyCreated){
     if(err) {

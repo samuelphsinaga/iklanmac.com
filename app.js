@@ -17,7 +17,7 @@ var commentRoutes = require('./routes/comments');
 var lapakmacRoutes = require('./routes/lapakmac');
 var indexRoutes   = require('./routes/index');
 
-mongoose.connect('mongodb://localhost/iklanmac9');
+mongoose.connect('mongodb://localhost/iklanmac10');
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + '/public'));

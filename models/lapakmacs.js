@@ -3,6 +3,7 @@ var mongoose   = require('mongoose');
 // Schema Setup
 var lapakmacSchema = new mongoose.Schema({
   name: String,
+  price: String,
   image: String,
   description: String,
   author: {
