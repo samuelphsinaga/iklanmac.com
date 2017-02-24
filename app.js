@@ -1,6 +1,4 @@
-var app           = require('express')();
 var express       = require('express');
-var http          = require('http').Server(app);
 var bodyParser    = require('body-parser');
 var mongoose      = require('mongoose');
 var flash         = require('connect-flash');
@@ -11,6 +9,7 @@ var lapakmacs     = require('./models/lapakmacs');
 var Comment       = require('./models/comment');
 var User          = require('./models/user');
 var seedDB        = require('./seeds');
+var app           = express();
 
 //requiring routes
 var commentRoutes = require('./routes/comments');
@@ -49,6 +48,8 @@ app.use('/', indexRoutes);
 app.use('/lapakmac', lapakmacRoutes);
 app.use('/lapakmac/:id/comments', commentRoutes);
 
-http.listen(3000, function(){
-  console.log("Iklan Mac Server Has Started!!");
+app.listen(process.env.PORT, process.env.IP, function() {
+  var appConsoleMsg = 'iklanmac server has started: ';
+  appConsoleMsg += process.env.IP + ':' + process.env.PORT;
+  console.log(appConsoleMsg);
 });
