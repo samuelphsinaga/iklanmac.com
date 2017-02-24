@@ -24,9 +24,6 @@ html {
 }
 .footer {
     color: #777;
-    position: absolute;
-    bottom:0px;
-    width: 100%;
 }
 .thumbnail {
     padding: 0;
