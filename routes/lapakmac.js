@@ -16,6 +16,12 @@ router.get('/', function(req, res) {
 
 });
 
+router.get('/', function(req, res){
+  lapakmacs.findAll(req.params.name, function(err, searchMac){
+    res.render("/lapakmac", {search : searchMac})
+  })
+})
+
 // create lapak
 router.post('/', middleware.isLoggedIn, function(req, res){
   // res.send("your hit the post route!");
