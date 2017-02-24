@@ -41,7 +41,7 @@ body {
 }
 
 .slideshow li:nth-child(1) {
-  background-image: url('/imgs/1.jpg')
+  background-image: url(http://i65.tinypic.com/27x302o.jpg);
 }
 .slideshow li:nth-child(2) {
   background-image: url(http://thesweetsetup.com/wp-content/uploads/2014/07/john-voorhees-setup.jpg);
