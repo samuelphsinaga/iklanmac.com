@@ -19,8 +19,8 @@
           <p><p><%=lapakmacs.description %></p></p>
           <p><em>Lapak By <%= lapakmacs.author.username%></em></p>
           <% if(currentUser && lapakmacs.author.id.equals(currentUser._id)) {%>
+            <form action="/lapakmac/<%= lapakmacs._id %>?_method=DELETE" method="post">
             <a class="btn btn-xs btn-warning" href="/lapakmac/<%= lapakmacs._id %>/edit">Edit</a>
-            <form id="delete-form" action="/lapakmac/<%= lapakmacs._id %>?_method=DELETE" method="post">
             <button class="btn btn-xs btn-danger">Delete</button>
             </form>
           <% }%>
