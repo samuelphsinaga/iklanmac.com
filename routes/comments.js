@@ -31,6 +31,7 @@ router.post('/', middleware.isLoggedIn, function(req, res){
     } else {
         Comment.create(req.body.comment, function(err, comment){
           if(err){
+            req.flash('error', 'Ada yang salah nih')
             console.log(err);
           } else {
             // menambah username dan id ke comment
@@ -40,6 +41,7 @@ router.post('/', middleware.isLoggedIn, function(req, res){
             comment.save();
             lapakmac.comments.push(comment);
             lapakmac.save();
+            req.flash('succes', 'Komen agan berhasil ditambahkan')
             res.redirect('/lapakmac/' + lapakmac._id)
           }
         })
@@ -76,6 +78,7 @@ router.delete('/:comment_id', middleware.checkCommentOwnership, function(req, re
     if(err){
       res.redirect('back');
     } else {
+      req.flash('success', 'Komentar agan berhasil dihapus')
       res.redirect('/lapakmac/' + req.params.id);
     }
   });

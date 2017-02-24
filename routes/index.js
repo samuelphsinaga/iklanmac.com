@@ -23,10 +23,10 @@ router.post('/register', function(req, res){
   var newUser = new User({username: req.body.username});
   User.register(newUser, req.body.password, function(err, user){
     if(err){
-      console.log(err);
-      res.render('register');
+      return res.render("register", {"error": err.message});
     }
     passport.authenticate('local')(req, res, function(){
+      req.flash('success', 'Welcome to iklanmac' + user.username);
       res.redirect('/lapakmac');
     })
   })
@@ -50,15 +50,8 @@ router.post('/login', passport.authenticate('local',
 // log out route
 router.get('/logout', function(req, res){
   req.logout();
+  req.flash('error', 'Logged you out!');
   res.redirect('/lapakmac');
 });
-
-// fungsi authenticate comment login atau middleware
-function isLoggedIn(req, res, next){
-  if(req.isAuthenticated()){
-    return next();
-  }
-  res.redirect('/login');
-};
 
 module.exports = router;
